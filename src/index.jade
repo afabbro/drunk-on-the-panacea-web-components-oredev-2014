@@ -13,11 +13,13 @@ html
     article
 
       section
-        h1 Drunk on the Panacea
-        h2 Web Components Hype and Stuff
+        h1 Web Components: Drunk on the Panacea
+        img(src='images/wc.png')
 
       section
-        img(href='images/wc.png')
+        h1 Hi! I'm Angelina Fabbro
+        h1 @hopefulcyborg on Twitter
+        h2 I work at Mozilla (was: devtools; now: tech evangelism!)
 
       section
         h2.bullet The Stars of the Show
@@ -50,10 +52,18 @@ html
         
       section
         h1 HONEYMOON OVER
-        h2 [good opportunity for a gif here maybe]
 
       section
         h2 General Concerns
+
+      section
+        h2.bullet STILL not supported by all browsers
+        h2.bullet Blame Internet Explorer and Safari
+
+      section
+        h2.bullet If you want to play with them, use webcomponents.js
+        h2.bullet It's from the Polymer team at Google!
+        h2.bullet (Formerly known as platform.js)
 
       section
         h2.bullet My co-workers at Mozilla are *smart* engineers
@@ -71,6 +81,7 @@ html
       section
         h2.bullet Making non-visual components into custom elements
         h2.bullet ...might not be the best idea
+        h2.bullet example: &lt;my-ajax-request&gt;
 
       section
         h2.bullet UI Components create a visual relationship
@@ -106,7 +117,7 @@ html
           code.language-javascript.
             // This example is bad, shouldn't we clone the node?
             var host = document.getElementById('host');
-            host.appendChild(document.getElementById('cats-template').content)
+            host.appendChild(document.getElementById('list-template').content)
 
       section
         h2 Template Tag Pain Points?
@@ -134,12 +145,25 @@ html
       section
         h2 HTML Imports Pain Points?
 
-
       section
         h2 Most of the time I want to use my imports immediately with JavaScript
+        
+      section
+        h2 I have to do this to get at my component from an external HTML file:
+        pre
+          code.language-javascript.
+            var link = document.querySelector('link[rel="import"]');
+            var content = link.import;
+
+            // Grab DOM from warning.html's document.
+            var el = content.querySelector('.warning');
+            document.body.appendChild(el.cloneNode(true));
 
       section
-        h2 But I can't do something like this:
+        h2 But really I want to do something clean like this:
+        pre
+          code.language-javascript.
+            var warningMessage = require('components/warningMessage');
 
       section
         h2 Need convention with your team for handling ordering of dependencies
@@ -155,7 +179,6 @@ html
           li.bullet Better: Introvert (turns all imports into JS, not prod. ready yet)
 
       section
-        h2.bullet They're kinda synchronous 
         h2.bullet Imports DO NOT block parsing of the main document
         h2.bullet Imports DO block rendering of the main page
         h2.bullet 1st &lt;script&gt; after an import will block page rendering
@@ -164,6 +187,7 @@ html
       section
         h2.bullet Work around by carefully ordering imports and scripts
         h2.bullet tedious, but helps mitigate blocking caveats
+        h2.bullet Good if you need to make sure a component is loaded before use in main doc
 
       section
         h2.bullet Requires polyfill, and
@@ -180,7 +204,7 @@ html
         h2.bullet Key Concepts:
         ul
           li
-            h3 Soft encapsulation - parent scope ("main" document) can't see into it
+            h3 Soft encapsulation - parent scope ('main' document) can't see into it
           li
             h3 Rendering of shadow tree replaces that of host tree
           li
@@ -189,12 +213,12 @@ html
       section
         pre
           code.language-markup.
-          &lt;button&gt;Hello, world!&lt;/button&gt;
-          &lt;script&gt;
-            var host = document.querySelector('button');
-            var root = host.createShadowRoot();
-            root.textContent = '&#12371;&#12435;&#12395;&#12385;&#12399;&#12289;&#24433;&#12398;&#19990;&#30028;!';
-          &lt;/script&gt;
+            &lt;button&gt;Hello, world!&lt;/button&gt;
+            &lt;script&gt;
+              var host = document.querySelector('button');
+              var root = host.createShadowRoot();
+              root.textContent = '&#12371;&#12435;&#12395;&#12385;&#12399;&#12289;&#24433;&#12398;&#19990;&#30028;!';
+            &lt;/script&gt;
 
       section
         h2 Instead of:
@@ -238,46 +262,51 @@ html
         h2 Shadow DOM Pain Points?
 
       section
-        h2 Many shadow trees mean perf problems [placeholder for some numbers/tests]
+        h2 Ordering of &lt;content&gt; tag matters/affects the children of the host element
+        h2 Works like cut, not like copy
 
       section
-        h2 Ordering of <content> tag matters/affects the children of the host element
-        h2 works like cut, not like copy
+        img(src='images/content-tag-results.png')
+        h2 If content has been 'selected' once, it cannot be selected again
 
       section
-        h2 What to put in the Shadow DOM and what not to?
-        h2 [placeholder for Polymer example where <app-liveshere>]
+        h2.bullet How many shadow trees are too many?
+        h2.bullet We are casually warned away from using 'too many' 
 
       section
-        h2 Special CSS selectors and functions penetrate soft boundary 
-        h2 (...and are not well supported)
+        h2.bullet What to put in the Shadow DOM and what not to?
+        h2 &lt;my-app&gt;
 
       section
-        h2 Why use Shadow DOM at all?
+        h2.bullet Special CSS selectors and functions penetrate soft boundary 
+        h2.bullet (...and are not well supported yet)
+        pre
+          code.language-css.
+            #host-element::shadow span 
+
+        pre
+          code.language-css.
+            body /deep/ .library-theme {
+              ...
+            }
 
       section
-        h2 Why persist shadow roots?
+        h2.bullet Why use Shadow DOM at all?
+        h2.bullet Separating content and presentation!
 
       section
         h2 Custom Elements
         h2 &lt;custom-element&gt;&lt;/custom-element&gt;
 
       section
-        h2.bullet Web Components: The Good Part
-        h2.bullet Singular intended.
-
-      section
-        pre
-          pre.language-javascript.
-            var MyWidget = document.register('my-widget');
-            document.body.appendChild(new MyWidget());
-
-      section
         pre
           code.language-javascript.
             var MyWidget = document.register('my-widget', {
               prototype: Object.create(HTMLElement.prototype)
-            });   
+            }); 
+        pre
+          code.language-markup.
+            &lt;my-widget&gt;  
 
       section
         h2 Custom Element Pain Points?
@@ -293,8 +322,9 @@ html
         h2.bullet Not optional, mandatory.
 
       section
-        h2 Give the element a prototype of an existing HTML element that makes some sense
-        h2 Or do the work and roll your own stuff
+        h2.bullet Extend existing elements
+        h2.bullet Build your components using existing elements 
+        h2.bullet Or do the work and roll your own stuff
 
       section
         h2 Watch Marcy Sutton's JSConf talk
@@ -390,6 +420,7 @@ html
           li ProductTable (green): displays and filters the data collection based on user input
           li ProductCategoryRow (turquoise): displays a heading for each category
           li ProductRow (red): displays a row for each product
+
       section
         h2.bullet If you're working with a designer they may have already done this, so go talk to them!
         h2.bullet Their Photoshop layer names may end up being the names of your React components!
@@ -401,27 +432,30 @@ html
 
       section
         h2 Gaia in Firefox OS
-        img(src='')
+        img(src='images/firefoxOS.jpg')
+
+      section
+        h2.bullet Use template tags in JavaScript
+        h2.bullet Change CSS variables on the fly for theming
+        h2.bullet Also uses Shadow DOM in places too!
 
       section
         h2 TRIUMF: Canada's National Nuclear Physics Laboratory
-        img(src='')
+        img(src='images/TRIUMF_logo_gray.png')
+        h3 Built using the X-Tag custom element polyfill
 
       section
-        img(src='')
-        h3 blergh
-
-      section
-        img(src='')
+        img(src='images/griff2.png')
         h3 Filter Control Component
 
       section
-        img(src='')     
+        img(src='images/griff3.png')
         h3 High Voltage Summary Board   
 
       section
         h2 Github
-
+        img(src='images/Octocat.png')
+        h2 Uses custom elements for time widget
 
       section
         pre
@@ -450,10 +484,12 @@ html
       section
         h2.bullet Natural Selection [placeholder for nice metaphor image]
         h2.bullet (some will stick around, others will fall by the wayside)
+        img(src='images/griff1.png')
 
       section
         h2.bullet Not every API is going to be a big hit
-        h2.bullet (and maybe that is okay)
+        h2.bullet and maybe that is okay!
+        h2.bullet ...but browser vendors and spec writers wish this were true ($$$!)
 
       section
         h2 Thanks!
