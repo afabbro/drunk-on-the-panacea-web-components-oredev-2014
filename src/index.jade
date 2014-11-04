@@ -6,20 +6,25 @@ html
     title Drunk on the Panacea
 
     link(rel='stylesheet', type='text/css', href='build/build.css')
-    link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Laila')
-
+    link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Fira+Sans')
   body
 
     article
 
       section
-        h1 Web Components: Drunk on the Panacea
-        img(src='images/wc.png')
+        h1 Web Components
+        img(src='images/webcomponents.png')
+        h2 Drunk on the Panacea?
 
       section
-        h1 Hi! I'm Angelina Fabbro
-        h1 @hopefulcyborg on Twitter
-        h2 I work at Mozilla (was: devtools; now: tech evangelism!)
+        h1.bullet Hi! I'm Angelina Fabbro
+        h1.bullet @hopefulcyborg on Twitter
+        h2.bullet I work at Mozilla!
+        h2.bullet (was: devtools; now: tech evangelism)
+
+      section
+        h2.bullet The Premise of Web Components:
+        h2.bullet Supposed to make it easier to write modular, reusable front-end code
 
       section
         h2.bullet The Stars of the Show
@@ -30,12 +35,8 @@ html
           li Shadow DOM
 
       section
-        h2.bullet The Premise of Web Components:
-        h2.bullet Supposed to make it easier to write modular, reusable front-end code
-
-      section
-        h1.bullet EVERYONE GOT VERY excited
-        h2.bullet (... including me)
+        h1.bullet EVERYONE GOT VERY EXCITED
+        h2.bullet ... including me!
 
       section
         h2 "A tectonic shift in web development"
@@ -47,45 +48,12 @@ html
         h2 "Well everyone else is excited, so I am excited too"
 
       section
-        h2.bullet I love web components!
-        h2.bullet ... but let's be grounded in reality about them.
+        h2.bullet I love the ideas behind web components!
+        h2.bullet ... but there are some things in practice I do not love.
         
       section
-        h1 HONEYMOON OVER
-
-      section
-        h2 General Concerns
-
-      section
-        h2.bullet STILL not supported by all browsers
-        h2.bullet Blame Internet Explorer and Safari
-
-      section
-        h2.bullet If you want to play with them, use webcomponents.js
-        h2.bullet It's from the Polymer team at Google!
-        h2.bullet (Formerly known as platform.js)
-
-      section
-        h2.bullet My co-workers at Mozilla are *smart* engineers
-        h2.bullet ..but they've pulled me aside to ask me to explain Shadom DOM to them.
-
-      section
-        h2 All of these technologies require JavaScript to use
-        h2 (unless you are using pre-made custom elements/tags)
-
-      section
-        h2.bullet Clever marketing obfuscates the truth
-        h2.bullet jQuery != JavaScript 
-        h2.bullet Google's Polymer != Web Components
-
-      section
-        h2.bullet Making non-visual components into custom elements
-        h2.bullet ...might not be the best idea
-        h2.bullet example: &lt;my-ajax-request&gt;
-
-      section
-        h2.bullet UI Components create a visual relationship
-        h2.bullet Non-visual components: how is the relationship clear?
+        h1.bullet MY HONEYMOON IS OVER
+        h2.bullet :(
 
       section
         h2 Okay, let's bring out our friends!
@@ -112,12 +80,6 @@ html
                 &lt;li&gt;&lt;img src=&quot;http://lorempixel.com/300/300/cats/6/&quot;&gt;&lt;/li&gt;
               &lt;/ul&gt;
             &lt;/template&gt;
-      section
-        pre
-          code.language-javascript.
-            // This example is bad, shouldn't we clone the node?
-            var host = document.getElementById('host');
-            host.appendChild(document.getElementById('list-template').content)
 
       section
         h2 Template Tag Pain Points?
@@ -128,7 +90,7 @@ html
 
       section
         h2 Note: No two-way binding, no binding at all
-        h2 (Not a paint point, just worth mentioning)
+        h2 (Not a pain point, just worth mentioning)
 
       section
         h2.bullet Not a lot to complain about here, to be honest.
@@ -166,11 +128,12 @@ html
             var warningMessage = require('components/warningMessage');
 
       section
-        h2 Need convention with your team for handling ordering of dependencies
+        h2.bullet Components using the same external dependency do not de-dupe dependency
+        h2.bullet E.g. The same jQuery from the same CDN, browser thinks these are different files
 
       section
         h2.bullet Have to avoid hammering our server with requests
-        h2.bullet Could wait for support from HTTP2, but we want to build stuff *today*
+        h2.bullet This requires some build step help
 
       section
         h2.bullet Build Tools for HTML Imports
@@ -186,8 +149,11 @@ html
 
       section
         h2.bullet Work around by carefully ordering imports and scripts
-        h2.bullet tedious, but helps mitigate blocking caveats
+        h2.bullet Tedious, but helps mitigate blocking caveats
         h2.bullet Good if you need to make sure a component is loaded before use in main doc
+
+      section
+        h2 Probably you need a convention to follow with your team
 
       section
         h2.bullet Requires polyfill, and
@@ -284,6 +250,7 @@ html
           code.language-css.
             #host-element::shadow span 
 
+        h2 Ignore all shadow boundaries:
         pre
           code.language-css.
             body /deep/ .library-theme {
@@ -312,12 +279,6 @@ html
         h2 Custom Element Pain Points?
 
       section
-        h2 Once an element is registered, cannot register another "version"
-
-      section
-        h2 [placeholder for example to clairfy multiple registrations problem]
-
-      section
         h2.bullet Accessibility is Mandatory
         h2.bullet Not optional, mandatory.
 
@@ -330,6 +291,39 @@ html
         h2 Watch Marcy Sutton's JSConf talk
         h2
           a(href='http://bit.ly/1vCKuqs') http://bit.ly/1vCKuqs
+      section
+        h2 General Concerns
+
+      section
+        h2.bullet STILL not supported by all browsers
+        h2.bullet Blame Internet Explorer and Safari
+
+      section
+        h2.bullet If you want to play with them, use webcomponents.js
+        h2.bullet It's from the Polymer team at Google!
+        h2.bullet (Formerly known as platform.js)
+
+      section
+        h2.bullet My co-workers at Mozilla are *smart* engineers
+        h2.bullet ..but they've pulled me aside to ask me to explain Shadom DOM to them.
+
+      section
+        h2 All of these technologies require JavaScript to use
+        h2 (more or less)
+
+      section
+        h2.bullet Clever marketing obfuscates the truth
+        h2.bullet jQuery != JavaScript 
+        h2.bullet Google's Polymer != Web Components
+
+      section
+        h2.bullet Making non-visual components into custom elements
+        h2.bullet ...might not be the best idea
+        h2.bullet example: &lt;my-ajax-request&gt;
+
+      section
+        h2.bullet UI Components create a visual relationship
+        h2.bullet Non-visual components: how is the relationship clear?
 
       section
         h2 I just want to get by - what's the most important thing to learn?
@@ -423,7 +417,7 @@ html
 
       section
         h2.bullet If you're working with a designer they may have already done this, so go talk to them!
-        h2.bullet Their Photoshop layer names may end up being the names of your React components!
+        h2.bullet Their Photoshop layer names may end up being the names of your components!
         h2.bullet Solid advice from the folks who made React.
 
       section
@@ -435,7 +429,7 @@ html
         img(src='images/firefoxOS.jpg')
 
       section
-        h2.bullet Use template tags in JavaScript
+        h2.bullet Uses template tags in JavaScript
         h2.bullet Change CSS variables on the fly for theming
         h2.bullet Also uses Shadow DOM in places too!
 
@@ -453,9 +447,7 @@ html
         h3 High Voltage Summary Board   
 
       section
-        h2 Github
-        img(src='images/Octocat.png')
-        h2 Uses custom elements for time widget
+        img(src='images/Octocat.png', style='height: 100%')
 
       section
         pre
@@ -472,19 +464,21 @@ html
           a(href='https://github.com/github/time-elements') [code]
 
       section
-        h2.bullet Implications for Mobile [placeholder for FxOS device photo]
+        h2.bullet Implications for Mobile
+        img(src='images/firefox-phone.png')
         ul
           li Poor support means polyfill is absolutely needed
           li Polyfill is huge, maybe ok with packaged apps
+          li Less about size, more about parsing all that JS on-device
           li Not so great for hosted apps/classically webby apps
 
       section
         h2 Where do we go from here?
 
       section
-        h2.bullet Natural Selection [placeholder for nice metaphor image]
+        h2.bullet Natural Selection
+        img(src='images/finches.jpg')
         h2.bullet (some will stick around, others will fall by the wayside)
-        img(src='images/griff1.png')
 
       section
         h2.bullet Not every API is going to be a big hit
@@ -492,14 +486,13 @@ html
         h2.bullet ...but browser vendors and spec writers wish this were true ($$$!)
 
       section
-        h2 Thanks!
+        h1 Thanks for listening!
         h3 Special Thanks to:
-        ul
-          li Dan Callahan
-          li Sole Penades
-          li Wilson Page
-          li HTML5 Rocks
-        h3 Slides will be posted after Oredev from my Twitter account:
+        h3 Dan Callahan
+        h3 Sole Penades
+        h3 Wilson Page
+        h3 HTML5 Rocks
+        h3 Follow for slides:
           a(href='http://twitter.com/hopefulcyborg')  @hopefulcyborg
 
     script(src='build/build.js')

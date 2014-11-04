@@ -622,11 +622,15 @@ pre[class*="language-"] {
   color: #fff;
 }
 body {
-  font-family: 'Laila', serif;
+  font-family: 'Fira Sans', sans-serif;
   background: #693726;
   color: #ffc2ce;
 }
 a {
   color: #80b3ff;
   text-decoration: none;
+}
+img {
+  max-height: 90%;
+  max-width: 90%;
 }
