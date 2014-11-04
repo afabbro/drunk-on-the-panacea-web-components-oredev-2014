@@ -621,3 +621,12 @@ pre[class*="language-"] {
 .emphatic-text {
   color: #fff;
 }
+body {
+  font-family: 'Laila', serif;
+  background: #693726;
+  color: #ffc2ce;
+}
+a {
+  color: #80b3ff;
+  text-decoration: none;
+}

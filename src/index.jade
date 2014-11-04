@@ -6,6 +6,7 @@ html
     title Drunk on the Panacea
 
     link(rel='stylesheet', type='text/css', href='build/build.css')
+    link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Laila')
 
   body
 
@@ -13,110 +14,243 @@ html
 
       section
         h1 Drunk on the Panacea
+        h2 Web Components Hype and Stuff
 
       section
-        h3.bullet The Stars of the Show
+        img(href='images/wc.png')
+
+      section
+        h2.bullet The Stars of the Show
         ul
-          li <template></template>
-          li <link rel="import">
-          li document.register()
-          li element.createShadowRoot()
+          li HTML Template Tag
+          li HTML Imports
+          li Custom Elements
+          li Shadow DOM
+
+      section
+        h2.bullet The Premise of Web Components:
+        h2.bullet Supposed to make it easier to write modular, reusable front-end code
+
+      section
+        h1.bullet EVERYONE GOT VERY excited
+        h2.bullet (... including me)
 
       section
         h2 "A tectonic shift in web development"
 
       section
-        h2 "The declaritive simplicity will be unparalelled"
+        h2 "The declaritive simplicity of using web components will be unparalelled"
 
       section
         h2 "Well everyone else is excited, so I am excited too"
 
       section
-        h2 Disclaimer: I love web components!
+        h2.bullet I love web components!
+        h2.bullet ... but let's be grounded in reality about them.
+        
+      section
+        h1 HONEYMOON OVER
+        h2 [good opportunity for a gif here maybe]
 
       section
-        h2 ... but let's be grounded in reality about them.
+        h2 General Concerns
 
       section
-        h2 General Over-rching Concerns
+        h2.bullet My co-workers at Mozilla are *smart* engineers
+        h2.bullet ..but they've pulled me aside to ask me to explain Shadom DOM to them.
 
       section
-        h2 Lots of educational materials...
-        h2 but it's still hard to understand.
+        h2 All of these technologies require JavaScript to use
+        h2 (unless you are using pre-made custom elements/tags)
 
       section
-        h2 You have to understand four different technologies
+        h2.bullet Clever marketing obfuscates the truth
+        h2.bullet jQuery != JavaScript 
+        h2.bullet Google's Polymer != Web Components
 
       section
-        h2 Explainer articles often have idealized, not real world examples
+        h2.bullet Making non-visual components into custom elements
+        h2.bullet ...might not be the best idea
 
       section
-        h2 Google's Polymer != Web Components
+        h2.bullet UI Components create a visual relationship
+        h2.bullet Non-visual components: how is the relationship clear?
 
       section
-        h2 Making non-visual components into custom elements
+        h2 Okay, let's bring out our friends!
+
+      section
+        h2 HTML Template Tag
+
+      section
+        pre
+          code.language-markup.
+            &lt;template id=&quot;list-template&quot;&gt;
+              &lt;style scoped&gt;
+                ul {
+                  list-style-type: none;
+                }
+                ul li {
+                  padding: 2%;
+                  border-radius: 10px;
+                }
+              &lt;/style&gt;
+              &lt;ul&gt;
+                &lt;li&gt;&lt;img src=&quot;http://lorempixel.com/300/300/cats/2/&quot;&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;img src=&quot;http://lorempixel.com/300/300/cats/4/&quot;&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;img src=&quot;http://lorempixel.com/300/300/cats/6/&quot;&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/template&gt;
+      section
+        pre
+          code.language-javascript.
+            // This example is bad, shouldn't we clone the node?
+            var host = document.getElementById('host');
+            host.appendChild(document.getElementById('cats-template').content)
+
+      section
+        h2 Template Tag Pain Points?
+
+      section
+        h2 Does what it says on the tin.
+        h2 It's just some markup parsed but not rendered, use it when you need!
+
+      section
+        h2 Note: No two-way binding, no binding at all
+        h2 (Not a paint point, just worth mentioning)
+
+      section
+        h2.bullet Not a lot to complain about here, to be honest.
+        h2.bullet Off to a good start!
 
       section
         h2 HTML Imports
 
       section
+        pre
+          code.language-markup.
+            &lt;link rel=&quot;import&quot; href=&quot;import-cats.html&quot;&gt;
+
+      section
+        h2 HTML Imports Pain Points?
+
+
+      section
+        h2 Most of the time I want to use my imports immediately with JavaScript
+
+      section
+        h2 But I can't do something like this:
+
+      section
         h2 Need convention with your team for handling ordering of dependencies
 
       section
-        h2 Have to avoid hammering our server with requests
-
-      section
-        h2 No async or defer like script, html imports are block always
+        h2.bullet Have to avoid hammering our server with requests
+        h2.bullet Could wait for support from HTTP2, but we want to build stuff *today*
 
       section
         h2.bullet Build Tools for HTML Imports
         ul
-          li Good: Vulcanizr (turns all imports into one import)
-          li Better: Introvert (turns all imports into JS)
+          li.bullet Good: Vulcanizr (turns all imports into one import)
+          li.bullet Better: Introvert (turns all imports into JS, not prod. ready yet)
 
       section
-        h2 HTML imports require a polyfill [placeholder for current compat table]
+        h2.bullet They're kinda synchronous 
+        h2.bullet Imports DO NOT block parsing of the main document
+        h2.bullet Imports DO block rendering of the main page
+        h2.bullet 1st &lt;script&gt; after an import will block page rendering
+        h2.bullet Import can have script inside that needs to run before script in the main page
 
       section
-        h2 Doesn't work with file:/// protocols because it does a hidden XMLHttpRequest
+        h2.bullet Work around by carefully ordering imports and scripts
+        h2.bullet tedious, but helps mitigate blocking caveats
 
       section
-        h2 HTML Templates
-
-      section
-        h2 Does what it says on the tin - very basic element, inert until injected into document
-        h2 [placeholder for compat table]
-
-      section
-        h2 No two-way binding, no binding at all
-
-      section
-        h2 Custom elements
-
-      section
-        h2 Arguably the most useful!
-
-      section
-        h2 once an element is registered, cannot register another "version"
-
-      section
-        h2 [placeholder for example to clairfy multiple registrations problem]
+        h2.bullet Requires polyfill, and
+        h2.bullet polyfill doesn't work with file:/// protocols because it does a hidden XMLHttpRequest
 
       section
         h2 Shadow DOM
+
+      section
+        h2 It's a tiny document
+        h2 ... that exists inside of a host element
+
+      section
+        h2.bullet Key Concepts:
+        ul
+          li
+            h3 Soft encapsulation - parent scope ("main" document) can't see into it
+          li
+            h3 Rendering of shadow tree replaces that of host tree
+          li
+            h3 is actually a 'document fragment'
+
+      section
+        pre
+          code.language-markup.
+          &lt;button&gt;Hello, world!&lt;/button&gt;
+          &lt;script&gt;
+            var host = document.querySelector('button');
+            var root = host.createShadowRoot();
+            root.textContent = '&#12371;&#12435;&#12395;&#12385;&#12399;&#12289;&#24433;&#12398;&#19990;&#30028;!';
+          &lt;/script&gt;
+
+      section
+        h2 Instead of:
+        pre
+          code.language-markup.
+            Hello, World!
+        h2 You get:
+        pre
+          code.language-markup.
+            こんにちは、影の世界!
+
+      section
+        h2 You can use content from the host node!
+        h2 ... using <content select="class_name"> inside your shadow tree
+
+      section
+        pre
+          code.language-markup.
+            &lt;div id=&quot;nameTag&quot;&gt;
+              &lt;div class=&quot;first&quot;&gt;Bob&lt;/div&gt;
+              &lt;div&gt;B. Love&lt;/div&gt;
+              &lt;div class=&quot;email&quot;&gt;bob@&lt;/div&gt;
+            &lt;/div&gt;
+
+      section        
+        pre
+          code.language-markup.
+            &lt;div style=&quot;background: purple; padding: 1em;&quot;&gt;
+              &lt;div style=&quot;color: red;&quot;&gt;
+                &lt;content select=&quot;.first&quot;&gt;&lt;/content&gt;
+              &lt;/div&gt;
+              &lt;div style=&quot;color: yellow;&quot;&gt;
+                &lt;content select=&quot;div&quot;&gt;&lt;/content&gt;
+              &lt;/div&gt;
+              &lt;div style=&quot;color: blue;&quot;&gt;
+                &lt;content select=&quot;.email&quot;&gt;&lt;/content&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+      section
+        h2 Shadow DOM Pain Points?
 
       section
         h2 Many shadow trees mean perf problems [placeholder for some numbers/tests]
 
       section
         h2 Ordering of <content> tag matters/affects the children of the host element
+        h2 works like cut, not like copy
 
       section
         h2 What to put in the Shadow DOM and what not to?
+        h2 [placeholder for Polymer example where <app-liveshere>]
 
       section
         h2 Special CSS selectors and functions penetrate soft boundary 
-        h2 (and are not well supported)
+        h2 (...and are not well supported)
 
       section
         h2 Why use Shadow DOM at all?
@@ -125,72 +259,211 @@ html
         h2 Why persist shadow roots?
 
       section
-        h2 I just want to get by - what's the most important thing to learn?
+        h2 Custom Elements
+        h2 &lt;custom-element&gt;&lt;/custom-element&gt;
 
       section
-        ul
-          li <custom-element>
-          li Thinking in Components (and getting your designer too as well)
+        h2.bullet Web Components: The Good Part
+        h2.bullet Singular intended.
+
+      section
+        pre
+          pre.language-javascript.
+            var MyWidget = document.register('my-widget');
+            document.body.appendChild(new MyWidget());
+
+      section
+        pre
+          code.language-javascript.
+            var MyWidget = document.register('my-widget', {
+              prototype: Object.create(HTMLElement.prototype)
+            });   
+
+      section
+        h2 Custom Element Pain Points?
+
+      section
+        h2 Once an element is registered, cannot register another "version"
+
+      section
+        h2 [placeholder for example to clairfy multiple registrations problem]
+
+      section
+        h2.bullet Accessibility is Mandatory
+        h2.bullet Not optional, mandatory.
+
+      section
+        h2 Give the element a prototype of an existing HTML element that makes some sense
+        h2 Or do the work and roll your own stuff
+
+      section
+        h2 Watch Marcy Sutton's JSConf talk
+        h2
+          a(href='http://bit.ly/1vCKuqs') http://bit.ly/1vCKuqs
+
+      section
+        h2 I just want to get by - what's the most important thing to learn?
 
       section
         h2 Let's look at the most popular frameworks
 
       section
-        h2 [placeholder for examples of custom element components]
+        h2 AngularJS Directives
+        pre
+          code.language-javascript.
+            var app = angular.module('myapp', []);
+             
+            app.directive('helloWorld', function() {
+              return {
+                  restrict: 'AE',
+                  replace: 'true',
+                  template: '<h3>Hello World!!</h3>'
+              };
+            });
+        pre
+          code.language-markup.
+            &lt;hello-world/&gt;
+
+      section
+        h2 Ember Components
+        pre
+          code.language-markup.
+            {{! templates/components/navigation-bar }}
+            &lt;ul&gt;
+              &lt;li&gt;{{#link-to 'home'}}Home{{/link-to}}&lt;/li&gt;
+              &lt;li&gt;{{#link-to 'about'}}About{{/link-to}}&lt;/li&gt;
+            &lt;/ul&gt;
+
+      section
+        h2 Polymer Elements
+        pre
+          code.language-markup.
+            &lt;polymer-element name=&quot;hello-world&quot; attributes=&quot;who&quot;&gt;
+              &lt;template&gt;
+                &lt;p&gt;Hello &lt;strong&gt;{{who}}&lt;/strong&gt; :)&lt;/p&gt;
+              &lt;/template&gt;
+              &lt;script&gt;
+                Polymer('hello-world', {
+                  who: 'World'
+                });
+              &lt;/script&gt;
+            &lt;/polymer-element&gt;
+        pre
+          code.language-markup.
+            &lt;hello-world who=&quot;Unicorn&quot;&gt;&lt;/hello-world&gt;
+
+      section
+        h2 React Components (Honorary Mention)
+        pre
+          code.language-javascript.
+            var HelloMessage = React.createClass({
+              render: function() {
+                return &lt;div&gt;Hello {this.props.name}&lt;/div&gt;;
+              }
+            });
+
+            React.render(&lt;HelloMessage name=&quot;John&quot; /&gt;, mountNode);
+
+      section
+        h2 You will understand some of the design decisions of major frameworks if you learn about custom elements
+      
       section
         h2 Thinking in Components
 
       section
-        h2 [placeholder for image of nested component concepts]
+        h2.bullet But how do you know what should be its own component? 
+        h2.bullet Use the same techniques for deciding if you should create a new function or object
+        h2.bullet This is the single responsibility principle
 
       section
-        h2 Accessibility Always [placeholder to link to marcy's accessibility talks]
+        h2.bullet A component should ideally only do one thing
+        h2.bullet If it ends up growing it should be decomposed into smaller subcomponents
+
+      section
+        h2 Also a good indicator: when you need to do the same thing twice!
+
+      section
+        img(src='images/thinking-in-react-components.png').bullet
+        ol
+          li FilterableProductTable (orange): contains the entirety of the example
+          li SearchBar (blue): receives all user input
+          li ProductTable (green): displays and filters the data collection based on user input
+          li ProductCategoryRow (turquoise): displays a heading for each category
+          li ProductRow (red): displays a row for each product
+      section
+        h2.bullet If you're working with a designer they may have already done this, so go talk to them!
+        h2.bullet Their Photoshop layer names may end up being the names of your React components!
+        h2.bullet Solid advice from the folks who made React.
 
       section
         h2.bullet Who is using web components?
-        ul
-          li Google, pretty obviously
-          li Github widget [note: ask Github to confirm this rumor]
-          li uhhh
+        h2.bullet ... in production, 'for real'
 
       section
-        h2 Your most important use classes
+        h2 Gaia in Firefox OS
+        img(src='')
+
+      section
+        h2 TRIUMF: Canada's National Nuclear Physics Laboratory
+        img(src='')
+
+      section
+        img(src='')
+        h3 blergh
+
+      section
+        img(src='')
+        h3 Filter Control Component
+
+      section
+        img(src='')     
+        h3 High Voltage Summary Board   
+
+      section
+        h2 Github
+
+
+      section
+        pre
+          code.language-markup.
+            &lt;time is=&quot;time-ago&quot; datetime=&quot;2012-04-01T16:30:00-08:00&quot;&gt;
+              April 1, 2014
+            &lt;/time&gt;
+        pre
+          code.language-markup.
+            &lt;time is=&quot;relative-time&quot; datetime=&quot;2014-04-01T16:30:00-08:00&quot;&gt;
+              April 1, 2014
+            &lt;/time&gt;
+        h2
+          a(href='https://github.com/github/time-elements') [code]
 
       section
         h2.bullet Implications for Mobile [placeholder for FxOS device photo]
         ul
           li Poor support means polyfill is absolutely needed
           li Polyfill is huge, maybe ok with packaged apps
-          li not so great for hosted apps
+          li Not so great for hosted apps/classically webby apps
 
       section
         h2 Where do we go from here?
 
       section
-        h2 Natural Selection [placeholder for nice metaphor image]
-        h2 (some will stick around, others will fall by the wayside)
+        h2.bullet Natural Selection [placeholder for nice metaphor image]
+        h2.bullet (some will stick around, others will fall by the wayside)
 
       section
-        h2 Is the adoption of every API necessary to advance the web?
-        h2 (maybe we learn from mistakes but throw away what does not work)
-
-      //- section
-      //-   h2 Syntax Highlighting
-      //-   h3 Powered by <a href="http://twitter.com/LeaVerou">Lea Verou</a>'s <a href="https://github.com/LeaVerou/prism">Prism</a>
-      //-   pre
-      //-     code.language-javascript.
-      //-       bespoke.from('article', [
-      //-         classes(),
-      //-         keys(),
-      //-         touch(),
-      //-         bullets('li, .bullet')
-      //-       ]);
+        h2.bullet Not every API is going to be a big hit
+        h2.bullet (and maybe that is okay)
 
       section
         h2 Thanks!
-        h3
-          a(href='http://twitter.com/hopefulcyborg')  -@hopefulcyborg
-
-            
+        h3 Special Thanks to:
+        ul
+          li Dan Callahan
+          li Sole Penades
+          li Wilson Page
+          li HTML5 Rocks
+        h3 Slides will be posted after Oredev from my Twitter account:
+          a(href='http://twitter.com/hopefulcyborg')  @hopefulcyborg
 
     script(src='build/build.js')
