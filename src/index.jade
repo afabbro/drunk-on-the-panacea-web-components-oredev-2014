@@ -94,6 +94,7 @@ html
 
       section
         h2.bullet Not a lot to complain about here, to be honest.
+        h2.bullet Supported by everyone but IE now
         h2.bullet Off to a good start!
 
       section
@@ -109,7 +110,7 @@ html
 
       section
         h2 Most of the time I want to use my imports immediately with JavaScript
-        
+
       section
         h2 I have to do this to get at my component from an external HTML file:
         pre
@@ -126,6 +127,10 @@ html
         pre
           code.language-javascript.
             var warningMessage = require('components/warningMessage');
+        h2 Or better yet, ES6 style:
+        pre
+          code.language-javascript.
+            import warningMessage from "warningMessage";
 
       section
         h2.bullet Components using the same external dependency do not de-dupe dependency
@@ -150,10 +155,8 @@ html
       section
         h2.bullet Work around by carefully ordering imports and scripts
         h2.bullet Tedious, but helps mitigate blocking caveats
-        h2.bullet Good if you need to make sure a component is loaded before use in main doc
-
-      section
-        h2 Probably you need a convention to follow with your team
+        h2.bullet Probably you need a convention to follow with your team
+ 
 
       section
         h2.bullet Requires polyfill, and
@@ -173,8 +176,6 @@ html
             h3 Soft encapsulation - parent scope ('main' document) can't see into it
           li
             h3 Rendering of shadow tree replaces that of host tree
-          li
-            h3 is actually a 'document fragment'
 
       section
         pre
@@ -201,6 +202,9 @@ html
         h2 ... using <content select="class_name"> inside your shadow tree
 
       section
+        h2 Shadow DOM Pain Points?
+
+      section
         pre
           code.language-markup.
             &lt;div id=&quot;nameTag&quot;&gt;
@@ -225,9 +229,6 @@ html
             &lt;/div&gt;
 
       section
-        h2 Shadow DOM Pain Points?
-
-      section
         h2 Ordering of &lt;content&gt; tag matters/affects the children of the host element
         h2 Works like cut, not like copy
 
@@ -238,6 +239,7 @@ html
       section
         h2.bullet How many shadow trees are too many?
         h2.bullet We are casually warned away from using 'too many' 
+        h2.bullet This is not useful information and no benchmarks ex
 
       section
         h2.bullet What to put in the Shadow DOM and what not to?
@@ -291,6 +293,15 @@ html
         h2 Watch Marcy Sutton's JSConf talk
         h2
           a(href='http://bit.ly/1vCKuqs') http://bit.ly/1vCKuqs
+
+      section
+        h2.bullet In Node, you use require() and what is included this way lives in it's own scope
+        h2.bullet Any custom elements registered w/browser are all in the same scope
+
+      section
+        h2.bullet If I have two components that need slight variation (different attributes) but same prototype
+        h2.bullet Too bad! Parser will only register the first prototype passed to it
+
       section
         h2 General Concerns
 
@@ -309,7 +320,7 @@ html
 
       section
         h2 All of these technologies require JavaScript to use
-        h2 (more or less)
+        h2 (more orless)
 
       section
         h2.bullet Clever marketing obfuscates the truth
